@@ -1,3 +1,7 @@
+android studio
+gradle
+volley
+
 java.com.gelkalampakas.schoolauthenticator: Κύριος φάκελος κώδικα
   .activities: Κώδικας των activity (Των οθονών της εφαρμογής)
     .LoginActivity.kt: Ορίζει την λειτουργία της οθόνης σύνδεσης στο server
