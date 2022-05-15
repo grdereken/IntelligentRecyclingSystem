@@ -4,10 +4,10 @@
 * gradle, https://gradle.org/
 * volley, https://google.github.io/volley/
 
-* java.com.gelkalampakas.schoolauthenticator: Κύριος φάκελος κώδικα
+- java.com.gelkalampakas.schoolauthenticator: Κύριος φάκελος κώδικα
   
-  ** .activities: Κώδικας των activity (Των οθονών της εφαρμογής)
-    .LoginActivity.kt: Ορίζει την λειτουργία της οθόνης σύνδεσης στο server
+    -- .activities: Κώδικας των activity (Των οθονών της εφαρμογής)
+    -- .LoginActivity.kt: Ορίζει την λειτουργία της οθόνης σύνδεσης στο server
     .MainActivity.kt: Ορίζει την λειτουργία της κύριας οθόνης
     .SettingsActivity.kt: Ορίζει την λειτουργία της οθόνης ρυθμίσεων
   .handlers: Λίγος γενικότερος κώδικας που χρησιμοπιείται σε πολλά σημεία
