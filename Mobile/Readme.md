@@ -1,6 +1,8 @@
-android studio
-gradle
-volley
+# Περιγράφη της εφαρμογής ταυτοποίησης του χρήστη
+Για την ανάπτυξη της εφαρμογής χρησιμοποιήθηκαν τα ελευθερα λογισμικά: 
+* android studio, https://developer.android.com/studio
+* gradle, https://gradle.org/
+* volley, https://google.github.io/volley/
 
 java.com.gelkalampakas.schoolauthenticator: Κύριος φάκελος κώδικα
   .activities: Κώδικας των activity (Των οθονών της εφαρμογής)
