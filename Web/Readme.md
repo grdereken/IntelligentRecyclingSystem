@@ -2,6 +2,7 @@
 - node, https://nodejs.org/en/
 - knex, http://knexjs.org/
 - sqlite3, https://www.sqlite.org/
+- DB Browser, https://sqlitebrowser.org
 
 Τα βήματα για να χρηισιμοποιήσεις το api είναι τα εξης
 - Πρώτο βήμα: Δημιουργείς τον χρήστη. Για να δημιουργήσεις τον χρήστη θα πρέπει να στείλεις το συγκεκριμένο
