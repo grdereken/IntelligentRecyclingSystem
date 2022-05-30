@@ -15,14 +15,16 @@
 Το σύστημά μας θα βασιστεί σε ανοιχτά λογισμικά και υλικά: Arduino, Linux, TensorFlow, OpenCV.
 
 ## Ο εξοπλισμός που θα χρειαστούμε είναι:
-* 2 Arduino UNO R3 ATmega328P (40 Ευρώ)
-* Καλώδια, leds, κουμπιά, αντιστάσεις (5 Ευρώ)
-* Πλακέτες διασύνδεσης - Breadboard (5 Ευρώ) 
-* 20x4 2004 LCD Display Module Serial Interface (10 Ευρώ)
-* 2 αισθητήρες υπερήχων,  ElecFreaks HC-SR04 Ultrasonic Module Distance (10 Ευρώ)
-* 4 x servo Motor (20 Ευρώ)
-* 2 Arduino Camera - Arducam OV5642 Camera Module (40 Ευρώ)
-* Wifi module (10 Ευρώ)
-* Power adapter with DC connector (10 Ευρώ)
+Ο εξοπλισμός που θα χρειαστούμε είναι:
 
-Συνολικό κόστος 150€
+* 1 Arduino UNO R3 ATmega328P (20 Ευρώ)
+* Καλώδια, leds, κουμπιά, αντιστάσεις (5 Ευρώ)
+* Πλακέτες διασύνδεσης - Breadboard (5 Ευρώ)
+* 20x4 2004 LCD Display Module Serial Interface (10 Ευρώ)
+* 3 αισθητήρες υπερήχων,  ElecFreaks HC-SR04 Ultrasonic Module Distance (5 Ευρώ)
+* 3 x servo Motor (15 Ευρώ)
+* 1 Camera ESP2-CAM (15 Ευρώ)
+* Basic 20x4 Character LCD - White on Blue 5V (I2C Protocol) (10 Ευρώ)
+* Power adapter with DC connector (5 Ευρώ)
+
+Συνολικό κόστος 90€
