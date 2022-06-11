@@ -32,15 +32,16 @@ async function getPoints(username){
         .first()
 }
 async function addPoints(username, pointsToAdd){
-    console.log('hi')
     const user = await getUserByName(username)
     const newPoints = user.points + pointsToAdd
-    console.log(`${username} now has ${newPoints} points`)
     return await setPoints(username, newPoints)
 }
 
 async function isLoginDataValid(username, password){
-    const user = await UserDbHelper.getUserByName(username)
+    const user = await getUserByName(username)
+    if(user == undefined){
+        return false
+    }
     if(user.password == password){
         return true
     }
