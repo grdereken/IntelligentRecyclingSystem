@@ -1,10 +1,8 @@
-const sqlite3 = require('sqlite3').verbose()
-const UsersDbHelper = require('./models/UserDbHelper')
+const UsersDbHelper = require('./helpers/UserDbHelper')
 const ValidateFunctions = require('./modules/ValidateFunctions.js')
-
+const authRoutes = require('./routes/users/auth/authRoutes.js')
 const express = require('express')
-const { response } = require('express')
-const { request } = require('express')
+
 const app = express()
 
 let currentActiveUser
@@ -13,58 +11,46 @@ app.use((request, response, next)=>{
   console.log(request.query)
   next()
 })
+app.use('/users/auth',authRoutes)
 
-app.get('/register', async (request, response) =>{
-  const username = request.query.username
-  const password = request.query.password
-
-  if (!username || !password){
-    response.send("You have to provide username and password")
-    return;
-  }
-
-  try {
-    await UsersDbHelper.addUser(username, password)
-    response.send("User succesfuly created")
-  }
-  catch(error){
-    response.send(error)
-  }
-
-  
-})
 
 app.get('/setActiveUser', async (request, response) =>{
   const username = request.query.username
   const password = request.query.password
-  const DoesUserExist = await ValidateFunctions.checkUser(username, password)
-  if (!username || !password){
-      response.send("You have to provide a username and a password")
-      return;
-  } 
-  if (DoesUserExist == false){
-    response.send("You have to provide the correct username and password")
+
+  const isLoginDataValid = await UsersDbHelper.isLoginDataValid(username, password)
+
+  if (isLoginDataValid == false){
+    
+    response
+    .status(403)
+    .send('Login data is invalid')
     return
   }
-
-  currentActiveUser = username
-  response.send(`${username} is now the active user`)
-  console.log(currentActiveUser)
+  try{
+    currentActiveUser = username
+    response.send(`${username} is now the active user`)
+  }
+  catch(error){
+    
+    response
+    .status(500)
+    .send(error)
+  }
 })
-
 app.get('/setPoints', async (request, response) =>{
-  const points = request.query.points
+  const points = parseInt(request.query.points)
   
-
-  UsersDbHelper.setPoints(currentActiveUser, points)
-  
-  .then(()=>{
-    response.send(`${currentActiveUser} now has ${points} points`)
-    // If user doesnt exist then it doesnt actually set the points
-    //but its not gonna return an error so be careful when using it
-  })
-
-
+  try{
+    await UsersDbHelper.setPoints(currentActiveUser, points)
+    const newPoints = await UsersDbHelper.getPoints(currentActiveUser)
+    response.send(newPoints)
+  }
+  catch(error){
+    response
+    .status(500)
+    .send(error)
+  }
 })
 
 
@@ -72,15 +58,43 @@ app.get('/isLoginDataValid', async(request, response) =>{
   const username = request.query.username
   const password = request.query.password
   
-  const result = await ValidateFunctions.checkUser(username, password)
-  response.send(result)
+  const isLoginDataValid = await UsersDbHelper.isLoginDataValid(username, password)
+  response.send(isLoginDataValid)
 
 })
+
 
 app.get('/addPoints', async(request, response) =>{
-  const points = request.query.points
-
-  UsersDbHelper.AddPoints(currentActiveUser, points)
+  const points = parseInt(request.query.points)
+  try{
+	  await UsersDbHelper.addPoints(currentActiveUser, points)
+    const newPoints = await UsersDbHelper.getPoints(currentActiveUser)
+	  response.send(newPoints.points)
+	
+  }
+  catch(error){
+	  response
+    .status(500)
+    .send(error)
+  }
 
 })
+
+app.get('/getPoints', async(request, response) =>{
+  try{
+    const points = await UsersDbHelper.getPoints(currentActiveUser)
+    console.log(points)
+  }
+  catch(error){
+    console.log(error)
+    response
+    .status(500)
+    .send(error)
+  }
+})
+
+app.get('/getActiveUser', async(request, response) =>{
+  response.send(currentActiveUser | '')
+})
+
 app.listen(80)

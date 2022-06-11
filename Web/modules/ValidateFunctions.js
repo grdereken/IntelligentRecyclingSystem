@@ -1,12 +1,13 @@
-const UserDbHelper = require('../models/UserDbHelper.js')
+require('module-alias/register')
+const UserDbHelper = require('@helpers/UserDbHelper.js')
 
 module.exports = {
-    checkUser
+    isLoginDataValid
 }
-async function checkUser(username, password){
-    const result = await UserDbHelper.checkUser(username, password)
-    if(result.length == 0){
-        return false
+async function isLoginDataValid(username, password){
+    const user = await UserDbHelper.getUserByName(username)
+    if(user.password == password){
+        return true
     }
-    return true
+    return false
 }

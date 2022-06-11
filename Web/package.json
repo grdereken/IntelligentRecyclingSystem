@@ -12,7 +12,13 @@
   "dependencies": {
     "express": "^4.17.3",
     "knex": "^0.95.15",
+    "module-alias": "^2.2.2",
     "sqlite": "^4.0.25",
     "sqlite3": "^5.0.2"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@helpers":  "helpers" 
+
   }
 }
