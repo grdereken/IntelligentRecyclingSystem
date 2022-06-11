@@ -19,23 +19,21 @@ app.get('/setActiveUser', async (request, response) =>{
   const password = request.query.password
 
   const isLoginDataValid = await UsersDbHelper.isLoginDataValid(username, password)
-
   if (isLoginDataValid == false){
     
     response
     .status(403)
-    .send('Login data is invalid')
+    .json('Login data is invalid')
     return
   }
   try{
     currentActiveUser = username
-    response.send(`${username} is now the active user`)
+    response.json(`${username} is now the active user`)
   }
   catch(error){
-    
     response
-    .status(500)
-    .send(error)
+    .status 
+    .json(error)
   }
 })
 app.get('/setPoints', async (request, response) =>{
@@ -49,7 +47,7 @@ app.get('/setPoints', async (request, response) =>{
   catch(error){
     response
     .status(500)
-    .send(error)
+    .json(error)
   }
 })
 
@@ -69,13 +67,13 @@ app.get('/addPoints', async(request, response) =>{
   try{
 	  await UsersDbHelper.addPoints(currentActiveUser, points)
     const newPoints = await UsersDbHelper.getPoints(currentActiveUser)
-	  response.send(newPoints.points)
+	  response.json(newPoints.points)
 	
   }
   catch(error){
 	  response
     .status(500)
-    .send(error)
+    .json(error)
   }
 
 })
