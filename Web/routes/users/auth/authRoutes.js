@@ -46,11 +46,11 @@ router.get('/isLoginDataValid', async(request, response) =>{
   response.json(isLoginDataValid)
 
 })
-app.get('/getActiveUser', async(request, response) =>{
+router.get('/getActiveUser', async(request, response) =>{
   if(!UsersDbHelper.isUserValid(currentActiveUser)){
     return errorHandler.handleError(response, 'Current active user does not exist', 400)
   }
-  response.json(UsersDbHelper.getUsernameByUser(user))
+  response.json(UsersDbHelper.getUsernameByUser(global.currentActiveUser))
 })
   
 module.exports = router
