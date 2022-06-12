@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "jest": "^28.1.1",
     "knex": "^0.95.15",
     "module-alias": "^2.2.2",
     "sqlite": "^4.0.25",
@@ -18,7 +19,6 @@
   },
   "_moduleAliases": {
     "@root": ".",
-    "@helpers":  "helpers" 
-
+    "@helpers": "helpers"
   }
 }

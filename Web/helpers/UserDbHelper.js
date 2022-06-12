@@ -7,43 +7,70 @@ module.exports = {
     addUser,
     addPoints,
     isLoginDataValid,
-    getPoints
+    getPoints,
+    getUsernameByUser,
+    isUserValid,
+    doesUserExist
 }
 
 
 async function getUserByName(username){
     return db('users')	
-	.where({username})
-	.first()
+	    .where({username})
+	    .first()
+}
+function getUsernameByUser(user){
+    return user.username
 }
 async function addUser(username, password){
-    return db('users').insert({username: username, password: password})
-    
-}
-async function setPoints(username, points){
-    return db('users')
-        .where({username})
-        .update({points})
-}
-async function getPoints(username){
-    return db('users')
-        .where({username})
-        .select('points')
-        .first()
-}
-async function addPoints(username, pointsToAdd){
-    const user = await getUserByName(username)
-    const newPoints = user.points + pointsToAdd
-    return await setPoints(username, newPoints)
+    return db('users').insert({username, password})
 }
 
+async function setPoints(user, points){
+    const username = getUsernameByUser(user)
+    await db('users')
+        .where({username})
+        .update({points})
+    return await getUserByName(username)//it's purpose is to update the user object
+
+}
+function getPoints(user){
+    return user.points
+}
+
+async function addPoints(user, pointsToAdd){
+    const newPoints = user.points + pointsToAdd
+    return await setPoints(user, newPoints)
+}
+
+
 async function isLoginDataValid(username, password){
+
     const user = await getUserByName(username)
+    if(!isUserValid(user)){
+        return false
+    }else if(user.password != password){
+        return false
+    }
+    return true
+}
+function isUserValid(user){
+    if(doesUserExist(user) == false){
+        return false
+    }
+    return isUserPropertiesValid(user)
+}
+function isUserPropertiesValid(user){
+    for(const property in user){
+        if(user[property] == undefined){
+            return false
+        }
+    }
+    return true
+}
+function doesUserExist(user){
     if(user == undefined){
         return false
     }
-    if(user.password == password){
-        return true
-    }
-    return false
+    return true
 }

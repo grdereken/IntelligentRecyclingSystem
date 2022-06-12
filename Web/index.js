@@ -1,98 +1,65 @@
 const UsersDbHelper = require('./helpers/UserDbHelper')
-const ValidateFunctions = require('./modules/ValidateFunctions.js')
+const errorHandler = require('./util/errorHandler')
 const authRoutes = require('./routes/users/auth/authRoutes.js')
 const express = require('express')
 
 const app = express()
 
-let currentActiveUser
+global.currentActiveUser
 
 app.use((request, response, next)=>{
   console.log(request.query)
   next()
 })
+
 app.use('/users/auth',authRoutes)
 
 
-app.get('/setActiveUser', async (request, response) =>{
-  const username = request.query.username
-  const password = request.query.password
 
-  const isLoginDataValid = await UsersDbHelper.isLoginDataValid(username, password)
-  if (isLoginDataValid == false){
-    
-    response
-    .status(403)
-    .json('Login data is invalid')
-    return
-  }
-  try{
-    currentActiveUser = username
-    response.json(`${username} is now the active user`)
-  }
-  catch(error){
-    response
-    .status 
-    .json(error)
-  }
-})
+
 app.get('/setPoints', async (request, response) =>{
   const points = parseInt(request.query.points)
-  
-  try{
-    await UsersDbHelper.setPoints(currentActiveUser, points)
-    const newPoints = await UsersDbHelper.getPoints(currentActiveUser)
-    response.send(newPoints)
+  if(isNaN(points)){
+    return errorHandler.handleError(response, 'Points argument has to be a number', 400)
   }
-  catch(error){
-    response
-    .status(500)
-    .json(error)
+  if(!UsersDbHelper.isUserValid(currentActiveUser)){
+    return errorHandler.handleError(response, 'Current active user is not valid', 400)
   }
+  currentActiveUser = await UsersDbHelper.setPoints(currentActiveUser, points)
+  const newPoints = UsersDbHelper.getPoints(currentActiveUser)
+  response.json(newPoints)
 })
-
-
-app.get('/isLoginDataValid', async(request, response) =>{
-  const username = request.query.username
-  const password = request.query.password
-  
-  const isLoginDataValid = await UsersDbHelper.isLoginDataValid(username, password)
-  response.send(isLoginDataValid)
-
-})
-
 
 app.get('/addPoints', async(request, response) =>{
   const points = parseInt(request.query.points)
-  try{
-	  await UsersDbHelper.addPoints(currentActiveUser, points)
-    const newPoints = await UsersDbHelper.getPoints(currentActiveUser)
-	  response.json(newPoints.points)
-	
-  }
-  catch(error){
-	  response
-    .status(500)
-    .json(error)
-  }
 
+  if(isNaN(points)){
+    return errorHandler.handleError(response, 'Points argument has to be a number', 400)
+  }
+  if(!UsersDbHelper.isUserValid(currentActiveUser)){
+    return errorHandler.handleError(response, 'Current active user is not valid', 400)
+  }
+	currentActiveUser = await UsersDbHelper.addPoints(currentActiveUser, points)
+  const newPoints = UsersDbHelper.getPoints(currentActiveUser)
+	response.json(newPoints)
 })
-
 app.get('/getPoints', async(request, response) =>{
-  try{
-    const points = await UsersDbHelper.getPoints(currentActiveUser)
-    console.log(points)
+  const username = request.query.username
+  const user = await UsersDbHelper.getUserByName(username)
+
+  if(!UsersDbHelper.isUserValid(user)){
+    return errorHandler.handleError(response, 'The user you have provided is not valid', 400)
   }
-  catch(error){
-    console.log(error)
-    response
-    .status(500)
-    .send(error)
-  }
+  const points = UsersDbHelper.getPoints(user)
+  response.json(points)
 })
 
 app.get('/getActiveUser', async(request, response) =>{
-  response.send(currentActiveUser | '')
+  if(!UsersDbHelper.isUserValid(currentActiveUser)){
+    return errorHandler.handleError(response, 'Current active user does not exist', 400)
+  }
+  response.json(UsersDbHelper.getUsernameByUser(user))
 })
 
 app.listen(80)
+
