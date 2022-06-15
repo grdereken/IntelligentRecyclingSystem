@@ -67,5 +67,6 @@ https://www.programmingelectronics.com/serial-read/
 ### Κύκλωμα Arduino
 <img src="/images/ellaK2022circuit.png">
 
-### Βίντεο Λειτουργίας (υποκατασκευή)
+### <a href=ellak2022b.mp4">Βίντεο Λειτουργίας</a>
+
 
