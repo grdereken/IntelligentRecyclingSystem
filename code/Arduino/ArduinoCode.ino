@@ -165,8 +165,6 @@ void showUser(String activeU, String points) {
   
   lcd.setCursor(0, 3);
   lcd.print("You have " + points + " points"); 
-  
-  delay(2000);
 }
 
 void delaymessage() {
@@ -184,17 +182,6 @@ void delaymessage() {
   lcd.setCursor(0, 3);
   lcd.print("--------------------");
   
-  delay(2000);
-}
-void showpoints(String acitveU, String points) {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(acitveU);
-  delay(100);
-  lcd.setCursor(0, 2);
-  lcd.print(points);
-  lcd.setCursor(0, 3);
-  lcd.print("--------------------");
   delay(2000);
 }
 
