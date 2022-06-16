@@ -33,10 +33,7 @@ app.get('/addPoints', errorHandler.handlePointsRequest,  async(request, response
 	response.json(newPoints)
 })
 app.get('/getPoints', errorHandler.handleCurrentActiveUser ,async(request, response) =>{
-  const username = request.query.username
-  const user = await UsersDbHelper.getUserByName(username)
-
-  const points = UsersDbHelper.getPoints(user)
+  const points = UsersDbHelper.getPoints(currentActiveUser)
   response.json(points)
 })
 

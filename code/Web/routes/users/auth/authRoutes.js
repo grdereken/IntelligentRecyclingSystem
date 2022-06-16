@@ -8,9 +8,6 @@ router.get('/register', errorHandler.handleLoginData, async(request, response) =
     const username = request.query.username
     const password = request.query.password
   
-    if (username == undefined || password == undefined){
-      return errorHandler.handleError(response, 'You have to provide a username and a password', 400)
-    }
     const user = await UsersDbHelper.getUserByName(username)
     if(UsersDbHelper.doesUserExist(user)){
       return errorHandler.handleError(response, 'User arleady exists', 403)
@@ -39,7 +36,7 @@ router.get('/isLoginDataValid', errorHandler.handleLoginData ,async(request, res
   response.json(isLoginDataValid)
 
 })
-router.get('/getActiveUser', errorHandler.handleCurrentActiveUser ,async(request, response) =>{
+router.get('/getActiveUser', async(request, response) =>{
   if(!UsersDbHelper.isUserValid(global.currentActiveUser)){
     return response.send("")
   }
