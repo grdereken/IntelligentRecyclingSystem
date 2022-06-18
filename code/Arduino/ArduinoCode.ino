@@ -77,36 +77,41 @@ void loop() {
     paperdistance = calculateDistance(paperTrigPin, paperEchoPin);
     delay(100);
     timewaiting = timewaiting + 100;
-      }
-    while (plasticdistance > maxDistance && aloumdistance > maxDistance && paperdistance > maxDistance && timewaiting < 10000);
+  }
+  while (plasticdistance > maxDistance && aloumdistance > maxDistance && paperdistance > maxDistance && timewaiting < 10000);
  
   //showdistances();
   if (timewaiting >= 10000) {
     return delaymessage();
   }
+  
   check_and_open(plasticdistance, plasticTrigPin, plasticEchoPin, plasticservo);
   check_and_open(aloumdistance, aloumTrigPin, aloumEchoPin, aloumservo);
   check_and_open(paperdistance, paperTrigPin, paperEchoPin, paperservo);
 }
 
-void check_and_open(int distance, int trigpin, int echopin, Servo s) {
+void check_and_open(float distance, int trigPin, int echoPin, Servo servo) {  
   if (distance < maxDistance) {
     delay(1);
-    s.write(0);
+    servo.write(0);
+
+    int timeSinceLastDetection = 0;
     do {
+      if(calculateDistance(trigPin, echoPin) < maxDistance) timeSinceLastDetection = 0;
+      
       delay(1);
-    } while (calculateDistance(trigpin, echopin) < maxDistance);
-    
-    delay(800);
-    
-    s.write(130);
+      
+      timeSinceLastDetection++;
+    } while (timeSinceLastDetection < 300);
+ 
+    servo.write(130);
 
     showUser(activeUser, String(activePoints.toInt() + 1)); //We want the screen to be responsive and addPoints() is slow
     activePoints = addPoints("1");
   }
 }
 
-int calculateDistance(int trigPin, int echoPin) {
+float calculateDistance(int trigPin, int echoPin) {
   const float speedOfSound = 0.034;
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -165,8 +170,6 @@ void showUser(String activeU, String points) {
   
   lcd.setCursor(0, 3);
   lcd.print("You have " + points + " points"); 
-  
-  delay(2000);
 }
 
 void delaymessage() {
@@ -184,17 +187,6 @@ void delaymessage() {
   lcd.setCursor(0, 3);
   lcd.print("--------------------");
   
-  delay(2000);
-}
-void showpoints(String acitveU, String points) {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(acitveU);
-  delay(100);
-  lcd.setCursor(0, 2);
-  lcd.print(points);
-  lcd.setCursor(0, 3);
-  lcd.print("--------------------");
   delay(2000);
 }
 
