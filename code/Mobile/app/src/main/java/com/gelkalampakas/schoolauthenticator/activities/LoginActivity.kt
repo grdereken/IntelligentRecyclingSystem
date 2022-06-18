@@ -48,7 +48,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var tempName: String
     private lateinit var tempPassword: String
-    private fun loginHandler(isLoginValid: Boolean) {
+    private fun loginHandler(response: String) {
+        val isLoginValid = response.toBoolean()
 
         setInvalidLoginViewVisibility(isLoginValid)
 
@@ -63,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         tempName = nameView.text.toString()
         tempPassword = passwordView.text.toString()
 
-        httpHandler.getRequest(url, LoginData(tempName, tempPassword), ::loginHandler, ::showRequestFailureToast)
+        httpHandler.getRequestWithLoginData(url, LoginData(tempName, tempPassword), ::loginHandler, ::showRequestFailureToast)
     }
 
     private fun switchToMainActivity(){
