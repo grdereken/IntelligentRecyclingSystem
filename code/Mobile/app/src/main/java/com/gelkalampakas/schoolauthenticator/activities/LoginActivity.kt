@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showRequestFailureToast(error: String) {
-        val toast = Toast.makeText(this, error, Toast.LENGTH_LONG)
+        val toast = Toast.makeText(this, error, Toast.LENGTH_SHORT)
         toast.show()
     }
 }
