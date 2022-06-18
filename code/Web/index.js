@@ -20,19 +20,22 @@ app.use('/',authRoutes)
 app.get('/setPoints',errorHandler.handlePointsRequest, async (request, response) =>{
   const points = parseInt(request.query.points)
 
-  currentActiveUser = await UsersDbHelper.setPoints(currentActiveUser, points)
-  const newPoints = UsersDbHelper.getPoints(currentActiveUser)
+  currentActiveUser = await UsersDbHelper.setPoints(global.currentActiveUser, points)
+  const newPoints = UsersDbHelper.getPoints(global.currentActiveUser)
   response.json(newPoints)
 })
 
 app.get('/addPoints', errorHandler.handlePointsRequest,  async(request, response) =>{
   const points = parseInt(request.query.points)
 
-	currentActiveUser = await UsersDbHelper.addPoints(currentActiveUser, points)
+	currentActiveUser = await UsersDbHelper.addPoints(global.currentActiveUser, points)
   const newPoints = UsersDbHelper.getPoints(currentActiveUser)
 	response.json(newPoints)
 })
-app.get('/getPoints', errorHandler.handleCurrentActiveUser ,async(request, response) =>{
+app.get('/getPoints', async(request, response) =>{
+  if(!UsersDbHelper.isUserValid(global.currentActiveUser)){
+    return response.json(0)
+  }
   const points = UsersDbHelper.getPoints(currentActiveUser)
   response.json(points)
 })
@@ -42,7 +45,7 @@ app.get('/getPointsFromLoginData',errorHandler.handleLoginData, async(request, r
 
   
   if(!UsersDbHelper.isLoginDataValid(username, password)){
-    return errorHandler.handleError(response, 'Login data is invalid', 403)
+    return response.json(0)
   }
   const user = await UsersDbHelper.getUserByName(username)
   const points = UsersDbHelper.getPoints(user)
