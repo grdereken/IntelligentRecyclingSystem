@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">School Authenticator</string>
-    <string name="serverIP">192.168.1.253</string>
+    <string name="serverIP">10.184.10.253</string>
 </resources>
