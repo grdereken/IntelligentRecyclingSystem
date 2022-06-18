@@ -36,7 +36,18 @@ app.get('/getPoints', errorHandler.handleCurrentActiveUser ,async(request, respo
   const points = UsersDbHelper.getPoints(currentActiveUser)
   response.json(points)
 })
+app.get('/getPointsFromLoginData',errorHandler.handleLoginData, async(request, response) =>{
+  const username = request.query.username
+  const password = request.query.password
 
+  
+  if(!UsersDbHelper.isLoginDataValid(username, password)){
+    return errorHandler.handleError(response, 'Login data is invalid', 403)
+  }
+  const user = await UsersDbHelper.getUserByName(username)
+  const points = UsersDbHelper.getPoints(user)
+  response.json(points)
+})
 
 app.listen(80)
 
