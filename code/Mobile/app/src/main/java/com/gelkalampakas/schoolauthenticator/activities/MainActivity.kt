@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Button
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,13 +19,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
 
-    private lateinit var activeUserView: TextView
+    private lateinit var userPointsView: TextView
+    private lateinit var activeUserModeSwitch: Switch
 
     private lateinit var setActiveUserButton: Button
     private lateinit var loginAgainButton: Button
 
     private var activeUser = ""
     private var activeUserPoints = ""
+    private var loggedInUserPoints = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,8 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.mainActivityToolbar)
         toolbar.setOnMenuItemClickListener { toolbarHandler(this, it) }
 
-        activeUserView = findViewById(R.id.activeUserView)
+        userPointsView = findViewById(R.id.userPointsView)
+        activeUserModeSwitch = findViewById(R.id.activeUserModeSwitch);
 
         setActiveUserButton = findViewById(R.id.setActiveUserButton)
         setActiveUserButton.setOnClickListener {setActiveUser()}
@@ -78,12 +82,16 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    private fun sendGetRequests() {
+    private fun pollForUser() {
         var url = "/getActiveUser/"
         httpHandler.getRequest(url, ::getActiveUser, ::showRequestFailureToast)
 
         url = "/getPoints/"
-        httpHandler.getRequest(url, ::getPoints, ::showRequestFailureToast)
+        httpHandler.getRequest(url, ::getActiveUserPoints, ::showRequestFailureToast)
+
+        url = "/getPointsFromLoginData/"
+        val loginData = preferenceHandler.getLoginData()
+        httpHandler.getRequestWithLoginData(url, loginData, ::getLoggedInUserPoints, ::showRequestFailureToast)
     }
 
     private fun setupUserPoll() {
@@ -91,24 +99,35 @@ class MainActivity : AppCompatActivity() {
 
         mainHandler.post(object : Runnable {
             override fun run() {
-                sendGetRequests()
-                mainHandler.postDelayed(this, 3000)
+                pollForUser()
+                mainHandler.postDelayed(this, 5000)
             }
         })
     }
 
-    private fun updateActiveUser() {
-        val newText = String.format("Active User: %s\nPoints: %s", activeUser, activeUserPoints)
-        activeUserView.setText(newText)
+    private fun updateUserPoints() {
+        val activeUserMode = activeUserModeSwitch.isChecked
+
+        val loggedInUser = preferenceHandler.getLoginData().username
+
+        val newText = if (activeUserMode) String.format("Active User: %s\nPoints: %s", activeUser, activeUserPoints)
+            else String.format("Logged In User: %s\nPoints: %s", loggedInUser, loggedInUserPoints)
+
+        userPointsView.setText(newText)
     }
 
     private fun getActiveUser(newActiveUser: String) {
         activeUser = newActiveUser
-        updateActiveUser()
+        updateUserPoints()
     }
 
-    private fun getPoints(newPoints: String) {
+    private fun getActiveUserPoints(newPoints: String) {
         activeUserPoints = newPoints
-        updateActiveUser()
+        updateUserPoints()
+    }
+
+    private fun getLoggedInUserPoints(newPoints: String) {
+        loggedInUserPoints = newPoints
+        updateUserPoints()
     }
 }
