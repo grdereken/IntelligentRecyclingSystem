@@ -42,7 +42,9 @@ class MainActivity : AppCompatActivity() {
         toolbar.setOnMenuItemClickListener { toolbarHandler(this, it) }
 
         userPointsView = findViewById(R.id.userPointsView)
+
         activeUserModeSwitch = findViewById(R.id.activeUserModeSwitch);
+        activeUserModeSwitch.setOnClickListener {updateUserPoints()}
 
         setActiveUserButton = findViewById(R.id.setActiveUserButton)
         setActiveUserButton.setOnClickListener {setActiveUser()}
@@ -100,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         mainHandler.post(object : Runnable {
             override fun run() {
                 pollForUser()
-                mainHandler.postDelayed(this, 5000)
+                mainHandler.postDelayed(this, 3000)
             }
         })
     }

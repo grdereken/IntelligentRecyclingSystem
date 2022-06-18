@@ -15,8 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteView"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toBottomOf="@+id/noteView" />
 
     <TextView
         android:id="@+id/noteView"
@@ -25,7 +24,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/back"
-        android:text="Use button below before using the machine"
+        android:text="Use Set Active User Button before using the machine"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="34sp"
@@ -33,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.15" />
 
     <Button
         android:id="@+id/loginAgainButton"
@@ -67,12 +66,14 @@
         android:layout_height="wrap_content"
         android:background="@drawable/back"
         android:text="Active User: \nPoints: "
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/setActiveUserButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteView" />
+        app:layout_constraintTop_toBottomOf="@+id/noteView"
+        app:layout_constraintVertical_bias="0.40" />
 
     <Switch
         android:id="@+id/activeUserModeSwitch"
@@ -86,8 +87,9 @@
         android:text="Active User Mode"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/userPointsView"
-        app:layout_constraintEnd_toStartOf="@+id/userPointsView"
+        app:layout_constraintBottom_toTopOf="@+id/setActiveUserButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/userPointsView" />
+        app:layout_constraintTop_toBottomOf="@+id/userPointsView"
+        app:layout_constraintVertical_bias="0.10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

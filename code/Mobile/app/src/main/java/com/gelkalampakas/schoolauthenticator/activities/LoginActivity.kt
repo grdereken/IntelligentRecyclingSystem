@@ -43,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {callLoginHandler()}
 
         invalidLoginView = findViewById(R.id.invalidLoginView)
-
     }
 
     private lateinit var tempName: String
