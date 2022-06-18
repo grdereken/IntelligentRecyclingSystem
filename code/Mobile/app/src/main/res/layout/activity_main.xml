@@ -92,4 +92,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPointsView"
         app:layout_constraintVertical_bias="0.10" />
+
+    <TextView
+        android:id="@+id/activeUserPromptView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back"
+        android:text="You are the active user!"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/loginAgainButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setActiveUserButton"
+        app:layout_constraintVertical_bias="0.05"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
