@@ -2,6 +2,7 @@ package com.gelkalampakas.schoolauthenticator.handlers
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.gelkalampakas.schoolauthenticator.R
 import com.gelkalampakas.schoolauthenticator.models.LoginData
 
 class PreferenceHandler(private val context: Context) {
@@ -35,7 +36,7 @@ class PreferenceHandler(private val context: Context) {
     fun getIP(): String {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("connection", Context.MODE_PRIVATE)
 
-        val ip = sharedPreferences.getString("ip", "192.168.1.253").toString()
+        val ip = sharedPreferences.getString("ip", context.getString(R.string.serverIP).toString()).toString()
 
         return ip
     }
