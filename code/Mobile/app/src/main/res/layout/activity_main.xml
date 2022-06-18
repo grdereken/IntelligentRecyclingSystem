@@ -15,8 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteView"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toBottomOf="@+id/noteView" />
 
     <TextView
         android:id="@+id/noteView"
@@ -25,7 +24,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/back"
-        android:text="Use button below before using the machine"
+        android:text="Use Set Active User Button before using the machine"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="34sp"
@@ -33,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.15" />
 
     <Button
         android:id="@+id/loginAgainButton"
@@ -62,15 +61,51 @@
         app:titleTextColor="@color/white" />
 
     <TextView
-        android:id="@+id/activeUserView"
+        android:id="@+id/userPointsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/back"
         android:text="Active User: \nPoints: "
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/setActiveUserButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteView" />
+        app:layout_constraintTop_toBottomOf="@+id/noteView"
+        app:layout_constraintVertical_bias="0.40" />
+
+    <Switch
+        android:id="@+id/activeUserModeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:gravity="center_vertical"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:showText="false"
+        android:text="Active User Mode"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/setActiveUserButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userPointsView"
+        app:layout_constraintVertical_bias="0.10" />
+
+    <TextView
+        android:id="@+id/activeUserPromptView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back"
+        android:text="You are the active user!"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/loginAgainButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setActiveUserButton"
+        app:layout_constraintVertical_bias="0.05"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {callLoginHandler()}
 
         invalidLoginView = findViewById(R.id.invalidLoginView)
-
     }
 
     private lateinit var tempName: String
@@ -77,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showRequestFailureToast(error: String) {
-        val toast = Toast.makeText(this, error, Toast.LENGTH_LONG)
+        val toast = Toast.makeText(this, error, Toast.LENGTH_SHORT)
         toast.show()
     }
 }
