@@ -10,20 +10,23 @@ import com.gelkalampakas.schoolauthenticator.models.LoginData
 class HttpHandler(private val context: Context) {
     var preferenceHandler: PreferenceHandler = PreferenceHandler(context)
 
-    fun getRequest(url: String, loginData: LoginData, funToCall: (input: Boolean) -> Any, errorFunToCall: (input: String) -> Any) {
-        val queue = Volley.newRequestQueue(context)
-
-
-        val username = loginData.username
-        val password = loginData.password
-        val fullUrl = "http://" + preferenceHandler.getIP() + url + String.format("?username=%s&password=%s", username, password)
-
+    val queue = Volley.newRequestQueue(context)
+    fun getRequest(url: String, funToCall: (input: String) -> Any, errorFunToCall: (input: String) -> Any) {
+        val fullUrl = "http://" + preferenceHandler.getIP() + url
         val stringRequest = StringRequest(Request.Method.GET, fullUrl,
             { response ->
-                funToCall(response.toString().toBoolean())
+                funToCall(response.toString())
             },
             { error -> errorFunToCall(error.toString())})
 
         queue.add(stringRequest)
+    }
+
+    fun getRequestWithLoginData(url: String, loginData: LoginData, funToCall: (input: String) -> Any, errorFunToCall: (input: String) -> Any) {
+        val username = loginData.username
+        val password = loginData.password
+
+        val urlWithLoginData = url + String.format("?username=%s&password=%s", username, password)
+        getRequest(urlWithLoginData, funToCall, errorFunToCall)
     }
 }
