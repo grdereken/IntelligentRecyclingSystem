@@ -5,7 +5,7 @@ const express = require('express')
 
 const app = express()
 
-global.currentActiveUser
+global.currentActiveUser = undefined
 
 app.use((request, response, next)=>{
   console.log(request.query)
@@ -28,7 +28,7 @@ app.get('/setPoints',errorHandler.handlePointsRequest, async (request, response)
 app.get('/addPoints', errorHandler.handlePointsRequest,  async(request, response) =>{
   const points = parseInt(request.query.points)
 
-	currentActiveUser = await UsersDbHelper.addPoints(global.currentActiveUser, points)
+	currentActiveUser = await UsersDbHelper.addPoints(currentActiveUser, points)
   const newPoints = UsersDbHelper.getPoints(currentActiveUser)
 	response.json(newPoints)
 })
