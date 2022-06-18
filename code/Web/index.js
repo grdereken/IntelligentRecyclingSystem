@@ -42,9 +42,9 @@ app.get('/getPoints', async(request, response) =>{
 app.get('/getPointsFromLoginData',errorHandler.handleLoginData, async(request, response) =>{
   const username = request.query.username
   const password = request.query.password
-
   
-  if(!UsersDbHelper.isLoginDataValid(username, password)){
+  const isLoginDataValid = await UsersDbHelper.isLoginDataValid(username, password)
+  if(!isLoginDataValid){
     return response.json(0)
   }
   const user = await UsersDbHelper.getUserByName(username)
