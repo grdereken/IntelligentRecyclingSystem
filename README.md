@@ -62,7 +62,7 @@ https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/
 https://www.programmingelectronics.com/serial-read/
 
 ### Φωτογραφίες από τις συναντήσεις και τους πειραματισμούς της ομάδας:
-<img src="/images/ellak2022process.png">
+<img src="https://openedtech.ellak.gr/wp-content/uploads/sites/31/2022/05/ellak2a-750x750.jpg">
 
 ### Κύκλωμα Arduino
 <img src="/images/ellaK2022circuit.png">
