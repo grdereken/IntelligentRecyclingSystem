@@ -63,6 +63,7 @@ https://www.programmingelectronics.com/serial-read/
 
 ### Φωτογραφίες από τις συναντήσεις και τους πειραματισμούς της ομάδας:
 <img src="https://openedtech.ellak.gr/wp-content/uploads/sites/31/2022/05/ellak2a-750x750.jpg">
+<img src="images/katask2.jpg" width="750">
 
 ### Κύκλωμα Arduino
 <img src="/images/ellaK2022circuit.png">
