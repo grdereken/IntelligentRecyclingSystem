@@ -7,9 +7,9 @@ module.exports = {
     addUser,
     addPoints,
     isLoginDataValid,
+    setPoints,
     getPoints,
     getUsernameByUser,
-    isUserValid,
     doesUserExist
 }
 
@@ -32,7 +32,6 @@ async function setPoints(user, points){
         .where({username})
         .update({points})
     return await getUserByName(username)//it's purpose is to update the user object
-
 }
 function getPoints(user){
     return user.points
@@ -47,27 +46,14 @@ async function addPoints(user, pointsToAdd){
 async function isLoginDataValid(username, password){
 
     const user = await getUserByName(username)
-    if(!isUserValid(user)){
+    if(!doesUserExist(user)){
         return false
     }else if(user.password != password){
         return false
     }
     return true
 }
-function isUserValid(user){
-    if(doesUserExist(user) == false){
-        return false
-    }
-    return isUserPropertiesValid(user)
-}
-function isUserPropertiesValid(user){
-    for(const property in user){
-        if(user[property] == undefined){
-            return false
-        }
-    }
-    return true
-}
+
 function doesUserExist(user){
     if(user == undefined){
         return false

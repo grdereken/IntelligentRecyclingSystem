@@ -10,11 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.2",
+    "dotenv": "^16.0.1",
     "express": "^4.17.3",
     "jest": "^28.1.1",
     "knex": "^0.95.15",
     "module-alias": "^2.2.2",
-    "sqlite": "^4.0.25",
     "sqlite3": "^5.0.2"
   },
   "_moduleAliases": {
