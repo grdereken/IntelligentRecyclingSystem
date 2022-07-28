@@ -1,6 +1,6 @@
 const chalk = require("chalk")
 const authRoutes = require('./routes/auth/authRoutes.js')
-const pointsRoutes = require('./routes/points/points.js')
+const pointsRoutes = require('./routes/points/pointsRoutes.js')
 const express = require('express')
 
 const app = express()
