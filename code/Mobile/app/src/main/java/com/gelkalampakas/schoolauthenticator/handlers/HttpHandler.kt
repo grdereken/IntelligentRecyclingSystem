@@ -29,4 +29,9 @@ class HttpHandler(private val context: Context) {
         val urlWithLoginData = url + String.format("?username=%s&password=%s", username, password)
         getRequest(urlWithLoginData, funToCall, errorFunToCall)
     }
+
+    fun getRequestWithUsername(url: String, username: String, funToCall: (input: String) -> Any, errorFunToCall: (input: String) -> Any) {
+        val urlWithLoginData = url + String.format("?username=%s", username)
+        getRequest(urlWithLoginData, funToCall, errorFunToCall)
+    }
 }

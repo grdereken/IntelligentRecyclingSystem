@@ -85,19 +85,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun showRequestFailureToast(error: String) {
         val toast = Toast.makeText(applicationContext, error, Toast.LENGTH_LONG)
-        toast.show()
+        //toast.show()
     }
 
     private fun pollForUser() {
         var url = "/getActiveUser/"
         httpHandler.getRequest(url, ::getActiveUser, ::showRequestFailureToast)
 
-        url = "/getPoints/"
+        url = "/getActiveUserPoints/"
         httpHandler.getRequest(url, ::getActiveUserPoints, ::showRequestFailureToast)
 
-        url = "/getPointsFromLoginData/"
+        if(loggedInUserPoints != "") return
+
+        url = "/getUserPoints/"
         val loginData = preferenceHandler.getLoginData()
-        httpHandler.getRequestWithLoginData(url, loginData, ::getLoggedInUserPoints, ::showRequestFailureToast)
+        httpHandler.getRequestWithUsername(url, loginData.username, ::getLoggedInUserPoints, ::showRequestFailureToast)
     }
 
     private fun setupUserPoll() {
@@ -134,16 +136,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun getActiveUser(newActiveUser: String) {
         activeUser = newActiveUser
+
         updateUI()
     }
 
     private fun getActiveUserPoints(newPoints: String) {
         activeUserPoints = newPoints
+
+        val loggedInUser = preferenceHandler.getLoginData().username
+        if(activeUser == loggedInUser) loggedInUserPoints = activeUserPoints
+
         updateUI()
     }
 
     private fun getLoggedInUserPoints(newPoints: String) {
         loggedInUserPoints = newPoints
+
         updateUI()
     }
 }
