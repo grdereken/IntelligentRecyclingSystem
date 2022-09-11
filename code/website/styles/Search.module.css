@@ -1,0 +1,35 @@
+.UserList{
+    width: 40rem;
+    display: flex;
+    justify-content: space-between;
+}
+.ResultsFound{
+    font-size: large;
+    padding-top: 13px;
+    display: flex;
+    justify-content: center;
+}
+
+.main{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.user{
+    width: 40rem;
+    font-size: x-large;
+    display: flex;
+    justify-content: space-between; 
+    border-bottom: 0.1rem;
+    border-bottom-style: solid;
+}
+
+.content{
+    padding: 10px;
+    margin-top: 13px;
+    border-radius: 1rem;
+    border-style: solid;
+    display: flex;  
+    align-items: center;
+    flex-direction: column;
+}
