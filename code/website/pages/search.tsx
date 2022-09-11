@@ -41,11 +41,11 @@ function CreateResultsFound(ContentLength: number){
     )
 }
 
-const searchApiUrl = 'http://localhost/search'
+const searchApiUrl = 'http://178.147.198.92/search'
 const Search: NextPage = ()=>{
     const UsernameRef = useRef<HTMLInputElement>(null)
     const [content, SetContent] = useState(null)
-    const [ContentLength, SetContentLength] = useState(null)
+    const [ContentLength, SetContentLength] = useState<any>(null)
 
     function search(username: string){
         return axios.get(searchApiUrl, {
@@ -89,4 +89,6 @@ const Search: NextPage = ()=>{
         </div>
     )
 }
+
+
 export default Search

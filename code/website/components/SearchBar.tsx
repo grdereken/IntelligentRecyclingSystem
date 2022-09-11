@@ -2,7 +2,7 @@ import { ComponentPropsWithRef } from "react";
 import styles from "../styles/SearchBar.module.css"
 import SearchIcon from '@mui/icons-material/Search';
 
-export default function({UsernameRef, onClick}: ComponentPropsWithRef<any>){
+export default function SearchBar({UsernameRef, onClick}: ComponentPropsWithRef<any>){
     return(
         <div className={styles.SearchDiv}>
             <input
