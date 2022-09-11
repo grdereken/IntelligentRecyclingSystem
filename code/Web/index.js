@@ -1,9 +1,9 @@
 const chalk = require('chalk')
 const cors = require('cors')
 const authRoutes = require('./routes/auth/authRoutes.js')
-const pointsRoutes = require('./routes/points/points.js')
-const leaderboardsRoutes = require('./routes/general/leaderboardsRoutes.js')
 const searchRoutes = require('./routes/general/searchRoutes.js')
+const pointsRoutes = require('./routes/points/pointsRoutes.js')
+
 const express = require('express')
 
 const app = express()

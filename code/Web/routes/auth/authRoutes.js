@@ -26,8 +26,7 @@ router.get('/setActiveUser', errorHandler.handleLoginData, async (request, respo
   }
   const user = await UsersDbHelper.getUserByName(username)
   global.currentActiveUser = user
-  
-  global.webSocketServer.broadcastActiveUserEvent(username)
+
   response.send(`${username} is now the active user`)
 })
 
