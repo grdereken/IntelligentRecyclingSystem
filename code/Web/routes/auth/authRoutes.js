@@ -2,7 +2,9 @@ require('module-alias/register')
 const express = require('express')
 const router = express.Router()
 const UsersDbHelper = require('@helpers/UserDbHelper.js')
-const errorHandler = require('@root/util/errorHandler.js')
+const errorHandler = require('@util/errorHandler.js')
+const getPublicColumns = require('@util/getPublicColumns.js')
+ 
 
 router.get('/register', errorHandler.handleLoginData, async(request, response) =>{
   const {username, password} = request.query
@@ -24,6 +26,8 @@ router.get('/setActiveUser', errorHandler.handleLoginData, async (request, respo
   }
   const user = await UsersDbHelper.getUserByName(username)
   global.currentActiveUser = user
+  
+  global.webSocketServer.broadcastActiveUserEvent(username)
   response.send(`${username} is now the active user`)
 })
 
@@ -34,6 +38,13 @@ router.get('/isLoginDataValid', errorHandler.handleLoginData ,async(request, res
   response.json(isLoginDataValid)
 })
 
+router.get('/getUserById', async(request, response) =>{
+  const {id} = request.query
+  const user = UsersDbHelper.getUserById(id)
+  const publicUser = await getPublicColumns(user)
+
+  response.send(publicUser)
+})
 router.get('/getActiveUser', async(request, response) =>{
   if(!UsersDbHelper.doesUserExist(global.currentActiveUser)){
     return response.send("")

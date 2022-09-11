@@ -4,17 +4,19 @@ const db = knex(config.development)
 
 module.exports = {
     getUserByName,
+    getUserById,
     addUser,
     addPoints,
     isLoginDataValid,
     setPoints,
     getPoints,
     getUsernameByUser,
-    doesUserExist
+    doesUserExist,
+    matchColumnPatern
 }
 
 
-async function getUserByName(username){
+function getUserByName(username){
     return db('users')	
 	    .where({username})
 	    .first()
@@ -22,8 +24,14 @@ async function getUserByName(username){
 function getUsernameByUser(user){
     return user.username
 }
-async function addUser(username, password){
-    return db('users').insert({username, password})
+function getUserById(id){
+    return db('users')	
+	    .where({id})
+	    .first()
+}
+function addUser(username, password){
+    return db('users')
+        .insert({username, password})
 }
 
 async function setPoints(user, points){
@@ -36,27 +44,25 @@ async function setPoints(user, points){
 function getPoints(user){
     return user.points
 }
-
 async function addPoints(user, pointsToAdd){
     const newPoints = user.points + pointsToAdd
     return await setPoints(user, newPoints)
 }
-
-
 async function isLoginDataValid(username, password){
-
     const user = await getUserByName(username)
-    if(!doesUserExist(user)){
-        return false
-    }else if(user.password != password){
+    if(user?.password != password){
         return false
     }
     return true
 }
-
 function doesUserExist(user){
     if(user == undefined){
         return false
     }
     return true
+}
+
+function matchColumnPatern(column, value){
+    return db('users')
+        .where(column, 'like', `%${value}%`)
 }
