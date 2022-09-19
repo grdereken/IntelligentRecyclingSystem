@@ -37,54 +37,69 @@ void setup() {
   pinMode(paperTrigPin, OUTPUT);
   pinMode(paperEchoPin, INPUT);
   pinMode(ledPin, OUTPUT);
-  aloumservo.write(130);
-  paperservo.write(130);
-  plasticservo.write(130);
+
   plasticservo.attach(plasticServoPin);
   aloumservo.attach(aloumServoPin);
   paperservo.attach(paperServoPin);
-  delay(2000);
-  Serial.begin(9600);
+  
+  aloumservo.write(90);
+  paperservo.write(90);
+  plasticservo.write(90);
+    
   lcd.begin();
   lcd.backlight();
+  
   digitalWrite(ledPin, LOW);
-  delay(3000);
 
+  Serial.begin(9600);
+  Serial.setTimeout(10);
 }
 
+bool showingUserMessage = true;
+unsigned long timeSinceLastDelayMessage = millis();
 
-int timeSinceLastUserPoll = millis();
+unsigned long timeSinceLastDetection = millis();
+unsigned long timeSinceLastUserPoll = millis();
 void loop() {
- if(millis() - timeSinceLastUserPoll >= 3000) {
-    activeUser = getActiveUser();
-    activePoints = getPoints();
-    
-    timeSinceLastUserPoll = millis();
-  }
-
   while (!hasActiveUser()) {
     activeUser = getActiveUser();
     activePoints = getPoints();
     delay(3000);
   }
-  
-  showUser(activeUser, activePoints);
-  
-  int timewaiting = 0;
+
+  timeSinceLastDetection = millis();
   do {
+    if(millis() - timeSinceLastUserPoll >= 3000) {
+      String newActiveUser = getActiveUser();
+      if(newActiveUser != activeUser) {
+        activeUser = newActiveUser;
+        activePoints = getPoints(); 
+        timeSinceLastDetection = millis();
+      }
+
+      showCorrectMessage();
+      timeSinceLastUserPoll = millis();
+    }
+    
     plasticdistance = calculateDistance(plasticTrigPin, plasticEchoPin);
     aloumdistance = calculateDistance(aloumTrigPin, aloumEchoPin);
     paperdistance = calculateDistance(paperTrigPin, paperEchoPin);
-    delay(100);
-    timewaiting = timewaiting + 100;
+         
+    delay(10);
   }
-  while (plasticdistance > maxDistance && aloumdistance > maxDistance && paperdistance > maxDistance && timewaiting < 10000);
+  while (plasticdistance > maxDistance && aloumdistance > maxDistance && paperdistance > maxDistance && millis() - timeSinceLastDetection < 10000);
  
   //showdistances();
-  if (timewaiting >= 10000) {
-    return delaymessage();
+  if (millis() - timeSinceLastDetection >= 10000) {
+    showingUserMessage = false;  
+
+    timeSinceLastDetection = millis();
+    timeSinceLastDelayMessage = millis();
+
+    showCorrectMessage();
+    return;
   }
-  
+
   check_and_open(plasticdistance, plasticTrigPin, plasticEchoPin, plasticservo);
   check_and_open(aloumdistance, aloumTrigPin, aloumEchoPin, aloumservo);
   check_and_open(paperdistance, paperTrigPin, paperEchoPin, paperservo);
@@ -95,16 +110,13 @@ void check_and_open(float distance, int trigPin, int echoPin, Servo servo) {
     delay(1);
     servo.write(0);
 
-    int timeSinceLastDetection = 0;
+    timeSinceLastDetection = millis();
     do {
-      if(calculateDistance(trigPin, echoPin) < maxDistance) timeSinceLastDetection = 0;
-      
+      if(calculateDistance(trigPin, echoPin) < maxDistance) timeSinceLastDetection = millis();
       delay(1);
-      
-      timeSinceLastDetection++;
-    } while (timeSinceLastDetection < 300);
+    } while (millis() - timeSinceLastDetection < 300);
  
-    servo.write(130);
+    servo.write(90);
 
     showUser(activeUser, String(activePoints.toInt() + 1)); //We want the screen to be responsive and addPoints() is slow
     activePoints = addPoints("1");
@@ -131,8 +143,7 @@ String getActiveUser() {
   
   while(Serial.available() == 0);
 
-  activeUser = Serial.readStringUntil('\0');
-  return activeUser;
+  return Serial.readString();
 }
 
 bool hasActiveUser() {
@@ -144,7 +155,7 @@ String addPoints(String points) {
   
   while(Serial.available() == 0);
   
-  return Serial.readStringUntil('\0');
+  return Serial.readString();
 }
 
 String getPoints() {
@@ -152,7 +163,7 @@ String getPoints() {
   
   while(Serial.available() == 0);
   
-  return Serial.readStringUntil('\0');
+  return Serial.readString();
 }
 
 void showUser(String activeU, String points) {
@@ -172,7 +183,7 @@ void showUser(String activeU, String points) {
   lcd.print("You have " + points + " points"); 
 }
 
-void delaymessage() {
+void showDelayMessage() {  
   lcd.clear();
   
   lcd.setCursor(0, 0);
@@ -186,8 +197,21 @@ void delaymessage() {
   
   lcd.setCursor(0, 3);
   lcd.print("--------------------");
-  
-  delay(2000);
+}
+
+void showCorrectMessage() {
+  if(showingUserMessage) {  
+    showUser(activeUser, activePoints);
+  } else {
+    if((millis() - timeSinceLastDelayMessage) >= 2000) {
+      showingUserMessage = true;
+      
+      showUser(activeUser, activePoints);
+      return;
+    }
+    
+    showDelayMessage();
+  }  
 }
 
 void showdistances() {

@@ -6,11 +6,12 @@ const String password = "123456789";
 const String host = "10.184.10.253";
 const String httpHeader = " HTTP/1.1\r\n";
 const int httpPort = 80;
+const String adminPassword = "xSQo4yZm0Qfeufv$9GC*5d1^#C$oo&1iD4viMa8XFxJm9UXJp4";
 
 void setup() {
   Serial.begin(9600);
+  Serial.setTimeout(10);
 
-  
   WiFi.begin(ssid.c_str(), password.c_str());
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -30,18 +31,18 @@ void loop() {
   }
   
   if(Serial.available() > 0){
-    String command = Serial.readStringUntil('\0');
+    String command = Serial.readString();
     if(command == "GetActiveUser") {
-      handleActiveUserCommand();
+      handleGetActiveUserCommand();
     } else if(command == "GetPoints") {
-      handleGetPointsCommand();
+      handleGetActiveUserPointsCommand();
     } else {
       handleAddPointsCommand(command);
     }
   }
 }
 
-void handleActiveUserCommand() {
+void handleGetActiveUserCommand() {
   Serial.print(getActiveUser());
 }
 
@@ -49,8 +50,8 @@ void handleAddPointsCommand(String points) {
   Serial.print(addPoints(points));
 }
 
-void handleGetPointsCommand() {
-  Serial.print(getPoints());
+void handleGetActiveUserPointsCommand() {
+  Serial.print(getActiveUserPoints());
 }
 
 String sendRequest(String url){
@@ -68,13 +69,14 @@ String buildGetActiveUserUrl() {
 
 String buildAddPointsUrl(String points){
   String url = "http://" + host + "/addPoints/";
-  url += "?points=";
-  url += points; 
+  url += "?points=" + points;
+  url += "&adminPassword=" + adminPassword;
+  
   return url;
 }
 
-String buildGetPointsUrl() {
-  String url = "http://" + host + "/getPoints/";
+String buildGetActiveUserPointsUrl() {
+  String url = "http://" + host + "/getActiveUserPoints/";
   return url;
 }
 
@@ -83,8 +85,8 @@ String getActiveUser() {
   return sendRequest(url);
 }
 
-String getPoints() {
-  String url = buildGetPointsUrl();
+String getActiveUserPoints() {
+  String url = buildGetActiveUserPointsUrl();
   return sendRequest(url);
 }
 
@@ -92,4 +94,3 @@ String addPoints(String points){
   String url = buildAddPointsUrl(points);
   return sendRequest(url);
 }
-
