@@ -1,0 +1,32 @@
+.nav{
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0 1rem;    
+}
+.nav ul{
+    background-color: #333;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    font-size: 1.5rem;
+    
+} 
+.nav a{
+    background-color: #333;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav ul a:hover {
+    background-color: #777;
+    cursor: pointer;
+}
+.SiteTitle{
+    font-size: 3rem;
+}
