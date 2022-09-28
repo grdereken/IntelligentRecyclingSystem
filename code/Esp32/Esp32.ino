@@ -1,11 +1,11 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const String ssid = "1lykkalamp2";
-const String password = "123456789";
-const String host = "10.184.10.253";
-const String httpHeader = " HTTP/1.1\r\n";
-const int httpPort = 80;
+const String ssid = "School Wireless";
+const String password = "12345678";
+const String hostIP = "10.184.10.253";
+const int httpPort = 4200;
+String host = hostIP + ":" + httpPort;
 const String adminPassword = "xSQo4yZm0Qfeufv$9GC*5d1^#C$oo&1iD4viMa8XFxJm9UXJp4";
 
 void setup() {
@@ -25,7 +25,7 @@ void setup() {
   
 void loop() {
   WiFiClient client;
-  if (!client.connect(host.c_str(), httpPort)) {
+  if (!client.connect(hostIP.c_str(), httpPort)) {
     Serial.println("connection failed");
     return;
   }
@@ -68,7 +68,7 @@ String buildGetActiveUserUrl() {
 }
 
 String buildAddPointsUrl(String points){
-  String url = "http://" + host + "/addPoints/";
+  String url = "http://" + host + "/addActiveUserPoints/";
   url += "?points=" + points;
   url += "&adminPassword=" + adminPassword;
   
