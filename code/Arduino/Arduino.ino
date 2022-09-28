@@ -69,7 +69,7 @@ void loop() {
 
   timeSinceLastDetection = millis();
   do {
-    if(millis() - timeSinceLastUserPoll >= 3000) {
+    if(millis() - timeSinceLastUserPoll >= 2000) {
       String newActiveUser = getActiveUser();
       if(newActiveUser != activeUser) {
         activeUser = newActiveUser;
