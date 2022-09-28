@@ -41,7 +41,7 @@ function CreateResultsFound(ContentLength: number){
     )
 }
 
-const searchApiUrl = 'http://178.147.198.92/search'
+const searchApiUrl = 'http://localhost:4200/search'
 const Search: NextPage = ()=>{
     const UsernameRef = useRef<HTMLInputElement>(null)
     const [content, SetContent] = useState(null)

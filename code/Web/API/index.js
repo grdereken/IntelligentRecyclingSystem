@@ -24,5 +24,5 @@ app.use('/',authRoutes)
 app.use('/', pointsRoutes)
 app.use('/', searchRoutes)
 
-app.listen(80)
+app.listen(4200)
 

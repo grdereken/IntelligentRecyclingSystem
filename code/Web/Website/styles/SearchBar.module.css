@@ -2,10 +2,12 @@
     display: flex;
     justify-content: center;
 }
+
 .UsernameInput{
+    box-shadow: none;
+    border-color: black;
     padding-left: 5px;
     border-radius: 0.85rem 0 0 0.85rem;
-    border-color: black;
     margin: 0;
     width: 40rem;
     height: 2.5rem;
@@ -13,6 +15,7 @@
     resize:none;
 }
 .SearchButton{
+    border-color: black;
     border-radius: 0 0.85rem 0.85rem 0;
     display: flex;
     justify-content: center;

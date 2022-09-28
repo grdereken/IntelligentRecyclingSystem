@@ -8,7 +8,7 @@ const authenticationHandler = require('@root/util/authenticationHandler.js')
 
 const handlePointsRequest = [errorHandler.handlePointsRequest, authenticationHandler.handleAdminPassword]
 
-router.get('/setPoints', handlePointsRequest, async (request, response) =>{
+router.get('/setActiveUserPoints', handlePointsRequest, async (request, response) =>{
     const {points} = request.query
 
     currentActiveUser = await UsersDbHelper.setPoints(global.currentActiveUser, parseInt(points))
@@ -16,7 +16,7 @@ router.get('/setPoints', handlePointsRequest, async (request, response) =>{
     response.json(newPoints)
 })
   
-router.get('/addPoints', handlePointsRequest,  async(request, response) =>{
+router.get('/addActiveUserPoints', handlePointsRequest,  async(request, response) =>{
     const {points}= request.query
     
     currentActiveUser = await UsersDbHelper.addPoints(currentActiveUser, parseInt(points))
