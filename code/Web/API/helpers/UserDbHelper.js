@@ -1,6 +1,13 @@
 const knex = require('knex')
-const config = require('../knexfile.js')
-const db = knex(config.development)
+const dbConfig = require('../knexfile.js')
+let db
+console.log(dbConfig.debugMode)
+if(dbConfig.debugMode){
+    db = knex(dbConfig.development)
+}else{
+    db = knex(dbConfig.production)
+}
+
 
 module.exports = {
     getUserByName,
@@ -9,6 +16,7 @@ module.exports = {
     addPoints,
     isLoginDataValid,
     setPoints,
+    resetAllUserPoints,
     getPoints,
     getUsernameByUser,
     doesUserExist,
@@ -39,7 +47,11 @@ async function setPoints(user, points){
     await db('users')
         .where({username})
         .update({points})
-    return await getUserByName(username)//it's purpose is to update the user object
+    return await getUserByName(username)//its purpose is to update the user object
+}
+async function resetAllUserPoints(){
+    await db('users')
+        .update({'points': 0})
 }
 function getPoints(user){
     return user.points
