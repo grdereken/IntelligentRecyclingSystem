@@ -1,6 +1,13 @@
 const knex = require('knex')
 const config = require('../knexfile.js')
-const db = knex(config.development)
+let db
+console.log(config.debugMode)
+if(config.debugMode){
+    db = knex(config.development)
+}else{
+    db = knex(config.production)
+}
+
 
 module.exports = {
     getUserByName,
