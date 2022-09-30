@@ -1,18 +1,22 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include "Config.h"
 
-const String ssid = "School Wireless";
-const String password = "12345678";
-const String hostIP = "10.184.10.253";
-const int httpPort = 4200;
-String host = hostIP + ":" + httpPort;
-const String adminPassword = "xSQo4yZm0Qfeufv$9GC*5d1^#C$oo&1iD4viMa8XFxJm9UXJp4";
+//Options are now in the config file
+const String accessPointSsid  = ACCESSPOINTSSID;
+const String accessPointPassword = ACCESSPOINTPASSWORD;
+
+const String hostIP = HOSTIP;
+const int hostHttpPort = HOSTHTTPPORT;
+String host = hostIP + ":" + hostHttpPort;
+
+const String adminPassword = ADMINPASSWORD;
 
 void setup() {
   Serial.begin(9600);
   Serial.setTimeout(10);
 
-  WiFi.begin(ssid.c_str(), password.c_str());
+  WiFi.begin(accessPointSsid.c_str(), accessPointPassword.c_str());
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -25,7 +29,7 @@ void setup() {
   
 void loop() {
   WiFiClient client;
-  if (!client.connect(hostIP.c_str(), httpPort)) {
+  if (!client.connect(hostIP.c_str(), hostHttpPort)) {
     Serial.println("connection failed");
     return;
   }
