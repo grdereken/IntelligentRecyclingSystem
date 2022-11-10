@@ -41,7 +41,7 @@ function CreateResultsFound(ContentLength: number){
     )
 }
 
-const searchApiUrl = 'http://localhost:4200/search'
+const searchApiUrl = process.env.NEXT_PUBLIC_SEARCH_URL
 const Search: NextPage = ()=>{
     const UsernameRef = useRef<HTMLInputElement>(null)
     const [content, SetContent] = useState(null)
