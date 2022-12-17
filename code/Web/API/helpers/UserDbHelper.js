@@ -1,13 +1,12 @@
 const knex = require('knex')
 const dbConfig = require('../knexfile.js')
 let db
-console.log(dbConfig.debugMode)
 if(dbConfig.debugMode){
+    console.log('Running on debug mode')
     db = knex(dbConfig.development)
 }else{
     db = knex(dbConfig.production)
 }
-
 
 module.exports = {
     getUserByName,

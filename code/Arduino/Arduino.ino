@@ -174,13 +174,13 @@ void showUser(String activeU, String points) {
   lcd.print("--------------------");
   
   lcd.setCursor(0, 1);
-  lcd.print("IRRS");
-  
-  lcd.setCursor(0, 2);
   lcd.print("Welcome, "  + activeU);
   
-  lcd.setCursor(0, 3);
+  lcd.setCursor(0, 2);
   lcd.print("You have " + points + " points"); 
+
+  lcd.setCursor(0, 3);
+  lcd.print("--------------------");
 }
 
 void showDelayMessage() {  
