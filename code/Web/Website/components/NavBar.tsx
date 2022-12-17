@@ -3,15 +3,15 @@ import Link from 'next/link'
 export default function Navbar(){
     return(
         <nav className={styles.nav}>
-            <Link href="/">
-                <a className={styles.SiteTitle}>IRRS</a>
+            <Link href="/" className={styles.SiteTitle}>
+                IRRS
             </Link>
             <ul>
                 <Link href="/leaderboards">
-                    <a>leaderboards</a>
+                    leaderboards
                 </Link>
                 <Link href="/search">
-                    <a>search</a>
+                    search
                 </Link>
                 
             </ul>

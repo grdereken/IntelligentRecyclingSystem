@@ -1,15 +1,20 @@
 import { useRouter } from 'next/router'
 import User from '../../components/User'
+import { useEffect, useState } from 'react';
 
-export default function Id(){
+const Users = () => {
     const router = useRouter()
-    const { id } = router.query
+    const [id, SetId] = useState<any>(undefined)
+    useEffect(() => {
+        if(router.query == undefined) return;
+        SetId(router.query.id)
+    }, [router.isReady]);
 
+    if(id == undefined) return
     return(
         <div>
-
-            <User id={ id }/>
+            <User id={id}/>
         </div>
     )
-    
 }
+export default Users    
