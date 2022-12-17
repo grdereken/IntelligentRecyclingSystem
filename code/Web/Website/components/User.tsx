@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, useState } from "react";
 import axios from "axios";
+import styles from "../styles/UserComponent.module.css"
 const GetUserByIdApiUrl = "http://localhost:4200/getUserById"
 
 export default function User({ id }: ComponentPropsWithoutRef<any>){
@@ -9,17 +10,17 @@ export default function User({ id }: ComponentPropsWithoutRef<any>){
         })
     }
     
-    const [Username, SetUsername] = useState<any>(null)
+    const [User, SetUser] = useState<any>(null)
     GetUserById(id).then((UserData)=>{
         const user = UserData.data 
-        const {username, id, points} = user
-        SetUsername(username)
+        SetUser(user)
     })
 
 
     return(
         <div>  
-            <h1>{Username}</h1>
+            <h1 className={styles.Title}>{User.Username}</h1>
+            <a>points: {User.Points}</a>
         </div>
     )
 }
