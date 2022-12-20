@@ -15,7 +15,20 @@ router.get('/setActiveUserPoints', handlePointsRequest, async (request, response
     const newPoints = UsersDbHelper.getPoints(global.currentActiveUser)
     response.json(newPoints)
 })
-  
+router.get('/setUserPoints', authenticationHandler.handleAdminPassword, async(request, response) =>{
+    const {username, points} = request.query
+    const user = await UsersDbHelper.getUserByName(username)
+    if(user == undefined) return errorHandler.handleError(response, 'user doesnt exist', 404)
+    try{
+        const publicUser = await UsersDbHelper
+            .setPoints(user, points)
+            .getPublicColumns()
+        response.json(publicUser)
+    }catch(err){
+        console.log(err)
+        errorHandler.handleError(response, 'Internal server error occured')
+    }
+})
 router.get('/addActiveUserPoints', handlePointsRequest,  async(request, response) =>{
     const {points}= request.query
     

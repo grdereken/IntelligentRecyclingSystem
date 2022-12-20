@@ -1,4 +1,9 @@
 const knex = require('knex')
+const getPublicColumns = require('@util/getPublicColumns')
+
+knex.knex.QueryBuilder.extend('getPublicColumns', function(){
+    return getPublicColumns(this)
+})
 const dbConfig = require('../knexfile.js')
 let db
 if(dbConfig.debugMode){
@@ -41,12 +46,15 @@ function addUser(username, password){
         .insert({username, password})
 }
 
-async function setPoints(user, points){
+function setPoints(user, points){
     const username = getUsernameByUser(user)
-    await db('users')
+    db('users')
         .where({username})
         .update({points})
-    return await getUserByName(username)//its purpose is to update the user object
+        .then(()=>{ //Do not remove this because weird bugs are gonna happen
+
+        })
+    return getUserByName(username)
 }
 async function resetAllUserPoints(){
     await db('users')

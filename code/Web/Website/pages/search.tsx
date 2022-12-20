@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import axios from 'axios'
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import SearchBar from '../components/SearchBar';
+import Link from 'next/link';
 
 function createContentList(users: any){
     if(!users) return 
@@ -14,7 +15,9 @@ function createContentList(users: any){
                 className = {styles.user}
                 key = {styles.id}>
                 <td>
-                    {user.username}
+                    <Link href={`users/${user.id}`}>
+                        {user.username}
+                    </Link>
                 </td>
                 <td>
                     {user.points}
@@ -60,7 +63,7 @@ const Search: NextPage = ()=>{
 
         const searchRequest = await search(UsernameRef.current.value)
         const users = searchRequest.data
-        
+
         const ContentList = createContentList(users)
         const ContentLength = GetContentLength(ContentList)
         const ResultsFound = CreateResultsFound(ContentLength)

@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const UsersDbHelper = require('@helpers/UserDbHelper.js')
 const errorHandler = require('@util/errorHandler.js')
-const getPublicColumns = require('@util/getPublicColumns.js')
+
  
 
 router.get('/register', errorHandler.handleLoginData, async(request, response) =>{
@@ -39,10 +39,11 @@ router.get('/isLoginDataValid', errorHandler.handleLoginData ,async(request, res
 
 router.get('/getUserById', async(request, response) =>{
   const {id} = request.query
-  const user = UsersDbHelper.getUserById(id)
-  const publicUser = await getPublicColumns(user)
+  const user = await UsersDbHelper
+    .getUserById(id)
+    .getPublicColumns()
 
-  response.send(publicUser)
+  response.send(user)
 })
 router.get('/getActiveUser', async(request, response) =>{
   if(!UsersDbHelper.doesUserExist(global.currentActiveUser)){

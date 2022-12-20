@@ -2,3 +2,40 @@
     display: flex;
     justify-content: center;
 }
+.PointsCell{
+    display: flex;
+    justify-content: center;
+}
+.PointsCell a{
+    font-size: larger;
+}
+.PointsCell button{
+    margin-left: 0.5rem;
+}
+.InputFields{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.PointsInput{
+    text-align: center;
+    font-size: 1.5rem;
+    height: 2.5rem;
+    width: 6rem;
+    border-color: black;
+}
+
+.AdminPassword{
+    font-size: 1.5rem;
+    text-align: center;
+    width: 12rem;
+    height: 2.5rem;
+    border-color: black;
+}
+.InputFields button{
+    background-color: #f3f4f6;
+    border-left: 0;
+}
+.InputFields button:hover{
+    background-color: #d1d5db;
+}
